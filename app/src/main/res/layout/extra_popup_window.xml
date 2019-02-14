@@ -8,21 +8,25 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/btnMyInfo"
         android:text="내정보"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/btnInfoUpdate"
         android:text="정보수정"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/btnLogOut"
         android:text="로그아웃"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/btnSettings"
         android:text="환경설정"/>
 
 </LinearLayout>
