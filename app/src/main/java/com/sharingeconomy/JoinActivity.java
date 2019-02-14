@@ -14,10 +14,10 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
         EditText editTextLoginPassword = (EditText) findViewById(R.id.editTextLoginPassword);
-        EditText editTextEmailAddress = (EditText) findViewById(R.id.editTextEmailAddress);
+        EditText editTextEmailAddress = (EditText) findViewById(R.id.editTextEmailId);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override

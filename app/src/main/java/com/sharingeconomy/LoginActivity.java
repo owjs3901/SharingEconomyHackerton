@@ -27,5 +27,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btnLogin.setOnClickListener(new View.OnClickListener() { // 나중에 지워야 할 코드
+            @Override
+            public void onClick(View v) {
+                Intent intentLogin = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intentLogin);
+            }
+        });
+
     }
 }
