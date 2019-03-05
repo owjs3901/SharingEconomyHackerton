@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+	<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBKPy9P1VxKfQ1zFrVo0tS2bgCg425oihE",
+    authDomain: "hackatone-5486f.firebaseapp.com",
+    databaseURL: "https://hackatone-5486f.firebaseio.com",
+    projectId: "hackatone-5486f",
+    storageBucket: "hackatone-5486f.appspot.com",
+    messagingSenderId: "804280661254"
+  };
+  firebase.initializeApp(config);
+  
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+//인증하기
+firebase.auth().signInWithPopup(provider).then(function(result) {
+	// This gives you a Google Access Token. You can use it to access the Google API.
+	var token = result.credential.accessToken;
+	// The signed-in user info.
+	var user = result.user;
+	
+	console.log(user)		// 인증 후 어떤 데이터를 받아오는지 확인해보기 위함.
+//...
+}).catch(function(error) {
+	// Handle Errors here.
+	var errorCode = error.code;
+	var errorMessage = error.message;
+	// The email of the user's account used.
+	var email = error.email;
+	// The firebase.auth.AuthCredential type that was used.
+	var credential = error.credential;
+	// ...
+});
+var db=firebase.database();
+var ac=db.ref('board/');
+//ac.set({"name":"tss"})
+ac.on('child_added',function(dd){
+	var arr=['','',''];
+	console.log(dd.key);
+	db.ref('board/'+dd.key).on('child_added',function(dc){
+		if(dc.key=='title')
+			arr[0]=dc.val();
+		if(dc.key=='owner')
+			arr[1]=dc.val();
+		if(dc.key=='content')
+			arr[2]=dc.val();
+	});
+	console.log(arr[0]);
+	document.write(arr[0]+"      ~~~~~~~~~~~     "+arr[1]+"<br>"+arr[2]+"<br>");
+});
+</script>
+</body>
+</html>

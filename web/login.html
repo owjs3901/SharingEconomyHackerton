@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>로그인</title>
+<link href="mystyle.css" rel="stylesheet" type="text/css">
+<style>
+td {
+	text-align: left;
+}
+</style>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+<script type="text/javascript">
+	var config = {
+		apiKey : "AIzaSyBKPy9P1VxKfQ1zFrVo0tS2bgCg425oihE",
+		authDomain : "hackatone-5486f.firebaseapp.com",
+		databaseURL : "https://hackatone-5486f.firebaseio.com",
+		projectId : "hackatone-5486f",
+		storageBucket : "hackatone-5486f.appspot.com",
+		messagingSenderId : "804280661254"
+	};
+	firebase.initializeApp(config);
+
+	var provider = new firebase.auth.GoogleAuthProvider();
+	var db = firebase.database();
+	var ac = db.ref('user/');
+	var arr = [];
+	ac.on('child_added', function(dd) {
+		var kc = [ '', '' ];
+		db.ref('user/' + dd.key).on('child_added', function(dc) {
+			if (dc.key == 'email')
+				kc[0] = dc.val();
+			if (dc.key == 'password')
+				kc[1] = dc.val();
+		});
+		arr.push(kc);
+	});
+
+	function re() {
+		var id = document.getElementById("id").value;
+		var ps = document.getElementById("ps").value;
+		var bc = true;
+		arr.forEach(function(e) {
+			if (id == e[0] && ps == e[1]) {
+				var setCookie = function(name, value, exp) {
+					var date = new Date();
+					date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+					document.cookie = name + '=' + value + ';expires='
+							+ date.toUTCString() + ';path=/';
+				};
+				setCookie("login", id);
+				alert("로그인 성공");
+				location.href = 'Main.jsp'
+				bc = false;
+				return;
+			}
+		});
+		if (bc)
+			alert("아이디와 비밀번호를 확인해주세요");
+	}
+</script>
+</head>
+<body>
+
+	<div id="main">
+		<div id="left">&nbsp;</div>
+		<div id="center">
+			<div id=header>
+				<a href="Main.jsp" target="_self"><img src="LOGO.png"
+					; width=250px; height=75px; align="center";></a>
+
+			</div>
+			<form action="loginAction.jsp" method="post">
+				<table align="center">
+					<br />
+					<br />
+					<tr>
+						<td><input type="text" id="id" placeholder="아이디"
+							class="inp-field" style="height: 30px; width: 300px"></td>
+					</tr>
+				</table>
+
+				<table align="center">
+					<br />
+					<tr>
+						<td><input type="password" id="ps" placeholder="비밀번호"
+							class="inp-field" style="height: 30px; width: 300px"> <span
+							class="ico pass"></span></td>
+					</tr>
+
+				</table>
+
+				<table align="center">
+					<tr>
+						<br />
+						<input type="button" value="로그인"
+							style="height: 30px; width: 306px" onclick='re()'>
+					</tr>
+					<br />
+					<tr>
+						<br />
+						<input type="button" value="회원 가입"
+							onclick="location.href='register.html'"
+							style="height: 30px; width: 306px">
+					</tr>
+				</table>
+
+			</form>
+		</div>
+	</div>
+
+
+</body>
+</html>

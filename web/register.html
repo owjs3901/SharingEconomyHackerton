@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<link href="mystyle.css" rel="stylesheet" type="text/css">
+<style>
+td {
+	text-align: left;
+}
+
+#header {
+	z-index: 2;
+}
+</style>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+<script type="text/javascript">
+	var config = {
+		apiKey : "AIzaSyBKPy9P1VxKfQ1zFrVo0tS2bgCg425oihE",
+		authDomain : "hackatone-5486f.firebaseapp.com",
+		databaseURL : "https://hackatone-5486f.firebaseio.com",
+		projectId : "hackatone-5486f",
+		storageBucket : "hackatone-5486f.appspot.com",
+		messagingSenderId : "804280661254"
+	};
+	firebase.initializeApp(config);
+
+	var provider = new firebase.auth.GoogleAuthProvider();
+	var db = firebase.database();
+	var ac = db.ref('user/');
+	var arr = [];
+	ac.on('child_added', function(dd) {
+		db.ref('user/' + dd.key).on('child_added', function(dc) {
+			if (dc.key == 'mail')
+				arr.push(dc.val());
+		});
+		console.log('test');
+	});
+	function re() {
+		var id = document.getElementById("id");
+		var ps = document.getElementById("ps");
+		var ps1 = document.getElementById("ps1");
+		var name = document.getElementById("name");
+
+		console.log("tes1t" + ps.value);
+
+		if (ps.value != ps1.value) {
+			alert("비밀번호를 확인해주세요");
+		} else {
+			var bc = true;
+			arr.forEach(function(e) {
+				if (bc && e == id.value) {
+					alert("동일한 아이디가 존재합니다");
+					bc = false;
+				}
+			});
+			if (bc) {
+				ac.push().set({
+					"email" : id.value,
+					'username' : name.value,
+					'password' : ps.value,
+					'phonenumber':"01000000000",
+					'point':0
+				});
+				alert("회원가입 완료");
+				location.href = 'login.html'
+			}
+		}
+	}
+</script>
+</head>
+
+<body>
+
+	<div id="main">
+		<div id="left">&nbsp;</div>
+		<div id="center">
+			<div id="wrap">
+				<div id=header>
+					<a href="Main.jsp" target="_self"><img src="LOGO.png"
+						; width=250px; height=75px; align="center";></a>
+				</div>
+				<div id="container">
+					<div id="content">
+						<div class="join">
+							</br> </br>
+							<form>
+								<table align="center">
+									<tr>
+										<td>아이디</td>
+									</tr>
+									<tr>
+										<td><input type="text" id="id" placeholder="아이디"
+											class="inp-field" style="height: 30px; width: 300px"></td>
+									</tr>
+								</table>
+
+								<table align="center">
+									<tr>
+										<td><label for="user-pass" class="blind">비밀번호</label></td>
+									</tr>
+									<tr>
+										<td><input type="password" id="ps" placeholder="비밀번호"
+											class="inp-field" style="height: 30px; width: 300px">
+											<span class="ico pass"></span></td>
+									</tr>
+
+								</table>
+
+								<table align="center">
+									<tr>
+										<td><label for="user-pass2" class="blind">비밀번호
+												재확인</label></td>
+									</tr>
+									<tr>
+										<td><input type="password" id="ps1"
+											placeholder="비밀번호 재확인" class="inp-field"
+											style="height: 30px; width: 300px"> <span
+											class="ico pass2"></span></td>
+									</tr>
+								</table>
+
+								<table align="center">
+									<tr>
+										<td><label for="user-name" class="blind">이름</label></td>
+									</tr>
+									<tr>
+										<td><input type="text" id="name" placeholder="이름"
+											class="inp-field w458" style="height: 30px; width: 300px"></td>
+									</tr>
+								</table>
+								<table align="center">
+								</table>
+								<div class="btn-area">
+									<br /> <input type="button" value="가입하기" onclick="re()"
+										class="btn-submit" style="height: 30px; width: 305px">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+
+</html>
